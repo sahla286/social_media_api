@@ -8,7 +8,6 @@ class socialmedia(models.Model):
     image=models.ImageField(upload_to='images',null=True)
     thought=models.CharField(max_length=500,null=True)
     like=models.ManyToManyField(User,related_name='likes')
-    # comment=models.CharField(max_length=500,null=True)
 
     @property
     def like_count(self):
