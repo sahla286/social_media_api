@@ -8,6 +8,7 @@ router=DefaultRouter()
 router.register('users',views.UserViewsetView,basename='users')
 router.register('postimage',views.SocialViewSet,basename='postimage')
 router.register('like',views.LikeViewSet,basename='like')
+router.register('allpost',views.AllSocialViewSet,basename='allpost')
 
 urlpatterns = [
     path('admin/', admin.site.urls),

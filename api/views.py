@@ -51,6 +51,43 @@ class SocialViewSet(ModelViewSet):
         else:
             raise serializers.ValidationError('not allowed')
         
+    def list(self, request,*args,**kw):
+        id=kw.get('pk')
+        post=self.queryset.get(id=id)
+        if post.user==request.user:
+            ser=SocialSerializer(post,data=request.data)
+            if ser.is_valid():
+                ser.save()
+                return Response(data=ser.data,status=status.HTTP_200_OK)
+            return Response(data=ser.errors,status=status.HTTP_400_BAD_REQUEST)
+        else:
+             raise serializers.ValidationError('not allowed') 
+        
+class AllSocialViewSet(ModelViewSet):
+    authentication_classes=[TokenAuthentication]
+    permission_classes=[IsAuthenticated]
+    serializer_class=SocialSerializer
+    queryset=socialmedia.objects.all()
+
+    def list(self, request,*args,**kw):
+        id=kw.get('pk')
+        post=self.queryset.get(id=id)
+        if post.user==request.user:
+            ser=SocialSerializer(post,data=request.data)
+            if ser.is_valid():
+                ser.save()
+                return Response(data=ser.data,status=status.HTTP_200_OK)
+            return Response(data=ser.errors,status=status.HTTP_400_BAD_REQUEST)
+        else:
+             raise serializers.ValidationError('not allowed') 
+        
+    def create(self, request, *args, **kwargs):
+        raise serializers.ValidationError("method is not allowed!!")
+    def update(self, request, *args, **kwargs):
+        raise serializers.ValidationError("method is not allowed!!")
+    def delete(self, request, *args, **kwargs):
+        raise serializers.ValidationError("method is not allowed!!")
+           
     
 class LikeViewSet(ModelViewSet):
     serializer_class=SocialSerializer
